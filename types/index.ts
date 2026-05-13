@@ -123,16 +123,14 @@ export interface Reminder {
 }
 
 export interface UserProfile {
-  name: string;
-  dueDate?: Date;
-  cycleLength: number;
-  periodLength: number;
-  preferences: {
-    theme: "light" | "dark" | "system";
-    weekStartDay: 0 | 1;
-    notifications: boolean;
-    language: string;
-  };
+  onboardingComplete: boolean;
+  lmp: string | null;
+  dueDate: string | null;
+  dateOfBirth: string | null;
+  isFirstPregnancy: boolean;
+  symptoms: string[];
+  dietaryPreferences: string[];
+  vitamins: string[];
 }
 
 export interface SEOMetadata {
@@ -173,4 +171,36 @@ export interface ChartDataPoint {
   week: number;
   value: number;
   label?: string;
+}
+
+export interface SymptomEntry {
+  date: string;
+  mood: "great" | "good" | "okay" | "rough" | null;
+  symptoms: { name: string; severity: 1 | 2 | 3 }[];
+  waterIntake: number;
+}
+
+export interface FoodRecommendation {
+  category: "recommended" | "avoid" | "vitamin";
+  food: string;
+  reason: string;
+  trimesterApplicable: 1 | 2 | 3 | "all";
+}
+
+export interface WeeklyInsight {
+  week: number;
+  babyDevelopment: string;
+  motherChanges: string;
+  tip: string;
+  emotionalMessage: string;
+  commonSymptoms: string[];
+}
+
+export interface BirthPlanItem {
+  id: string;
+  text: string;
+  category: "labor" | "pain" | "delivery" | "postpartum" | "partner" | "other";
+  completed: boolean;
+  locked: boolean;
+  order: number;
 }

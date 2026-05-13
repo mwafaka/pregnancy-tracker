@@ -45,14 +45,16 @@ export function LandingHero() {
           </motion.p>
 
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="gap-2 rounded-xl h-12 px-8 text-base">
-              Get Started
-              <ArrowRight className="w-5 h-5" />
+            <Button size="lg" className="gap-2 rounded-xl h-12 px-8 text-base" asChild>
+              <a href="/onboarding">
+                Get Started
+                <ArrowRight className="w-5 h-5" />
+              </a>
             </Button>
             <Button variant="outline" size="lg" className="rounded-xl h-12 px-8 text-base" asChild>
-              <a href="#calculators">
+              <a href="/onboarding">
                 <Clock className="w-5 h-5" />
-                Explore Tools
+                Set Up My Pregnancy
               </a>
             </Button>
           </motion.div>

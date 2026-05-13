@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileBottomNav } from "@/components/shared/mobile-bottom-nav";
 import { Toaster } from "@/components/ui/toaster";
+import { PregnancyProvider } from "@/context/pregnancy-context";
 import { SITE_CONFIG } from "@/constants";
 import { JsonLd } from "@/components/seo/json-ld";
 import "@/styles/globals.css";
@@ -56,12 +57,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="pt-20 pb-20 md:pb-0">{children}</main>
-          <Footer />
-          <MobileBottomNav />
-          <Toaster />
-          <JsonLd />
+          <PregnancyProvider>
+            <Header />
+            <main className="pt-20 pb-20 md:pb-0">{children}</main>
+            <Footer />
+            <MobileBottomNav />
+            <Toaster />
+            <JsonLd />
+          </PregnancyProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -4,8 +4,6 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import {
   Home,
-  Calculator,
-  Activity,
   LayoutDashboard,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -17,10 +15,8 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/calculators", label: "Calculators", icon: Calculator },
-  { href: "/tracker", label: "Tracker", icon: Activity },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/", label: "Home", icon: Home },
 ]
 
 export function MobileBottomNav() {

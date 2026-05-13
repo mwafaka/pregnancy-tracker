@@ -33,17 +33,17 @@ export function LandingCTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="gap-2 rounded-xl h-12 px-8" asChild>
-                <Link href="/tools/due-date-calculator">
-                  Calculate Due Date
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="rounded-xl h-12 px-8" asChild>
-                <Link href="/dashboard">
-                  Open Dashboard
-                </Link>
-              </Button>
+                <Button size="lg" className="gap-2 rounded-xl h-12 px-8" asChild>
+                  <Link href="/onboarding">
+                    Start Your Journey
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" className="rounded-xl h-12 px-8" asChild>
+                  <Link href="/tools/due-date-calculator">
+                    Quick Calculators
+                  </Link>
+                </Button>
             </div>
           </div>
         </motion.div>
