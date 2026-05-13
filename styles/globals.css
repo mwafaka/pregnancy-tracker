@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@layer base {
+  :root {
+    --background: 30 20% 98%;
+    --foreground: 240 10% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+    --surface: 30 20% 99%;
+    --surface-secondary: 30 15% 95%;
+    --surface-glass: 30 20% 99% / 0.7;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+    --primary: 18 88% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 260 60% 72%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 30 15% 93%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 260 50% 92%;
+    --accent-foreground: 260 60% 35%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --border: 30 15% 90%;
+    --input: 30 15% 88%;
+    --ring: 18 88% 63%;
+    --radius: 0.75rem;
+    --glass-highlight: 30 20% 99% / 0.6;
+    --glass-border: 30 15% 90% / 0.3;
+    --gradient-1: #fef6f1;
+    --gradient-2: #f8f5ff;
+    --gradient-3: #fef1f7;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 8%;
+    --card-foreground: 0 0% 98%;
+    --surface: 240 10% 6%;
+    --surface-secondary: 240 8% 12%;
+    --surface-glass: 240 10% 8% / 0.6;
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 18 88% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 260 60% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 8% 14%;
+    --muted-foreground: 240 4% 60%;
+    --accent: 260 30% 20%;
+    --accent-foreground: 260 50% 80%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 8% 18%;
+    --input: 240 8% 22%;
+    --ring: 18 88% 55%;
+    --glass-highlight: 240 10% 12% / 0.4;
+    --glass-border: 240 8% 20% / 0.2;
+    --gradient-1: #1a1410;
+    --gradient-2: #14101a;
+    --gradient-3: #1a1018;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-peach-200/60 text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-surface-glass backdrop-blur-xl border border-white/10 shadow-lg;
+  }
+
+  .glass-strong {
+    @apply bg-surface-glass backdrop-blur-2xl border border-white/20 shadow-xl;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-peach-400 to-lavender-400;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-bg from-peach-50 via-white to-lavender-50 dark:from-peach-950/20 dark:to-lavender-950/20;
+  }
+
+  .floating-gradient {
+    @apply absolute rounded-full opacity-20 blur-3xl pointer-events-none;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .calculator-card {
+    @apply glass rounded-3xl p-6 md:p-8 transition-all duration-300;
+  }
+
+  .stat-value {
+    @apply font-display text-3xl md:text-4xl font-bold gradient-text;
+  }
+
+  .section-title {
+    @apply font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight;
+  }
+
+  .prose-content h2 {
+    @apply text-2xl font-bold mt-8 mb-4 font-display;
+  }
+
+  .prose-content h3 {
+    @apply text-xl font-semibold mt-6 mb-3 font-display;
+  }
+
+  .prose-content p {
+    @apply leading-relaxed mb-4 text-muted-foreground;
+  }
+
+  .prose-content ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+  }
+
+  .disclaimer-banner {
+    @apply text-xs text-muted-foreground bg-muted/50 rounded-xl px-4 py-3 border border-border;
+  }
+}
