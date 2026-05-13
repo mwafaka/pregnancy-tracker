@@ -72,6 +72,7 @@ export default async function ContentPage({ params }: Props) {
           {data.content.split("\n\n").map((paragraph, i) => {
             if (paragraph.startsWith("**")) {
               const [title, ...rest] = paragraph.split("**: ");
+              if (!title) return null;
               return (
                 <div key={i} className="mb-6">
                   <h3 className="font-display font-semibold text-lg mb-2">

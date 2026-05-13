@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Baby, Calendar } from "lucide-react";
+import { Baby, Calendar, Apple, Moon, Activity, Droplets } from "lucide-react";
 import { WeekSlider } from "@/components/shared/week-slider";
 import { GlassCard } from "@/components/shared/glass-card";
 import { HealthTipCard } from "@/components/shared/health-tip-card";
@@ -62,10 +62,10 @@ export default function TrackerPage() {
         <motion.div variants={fadeInUp}>
           <h3 className="font-display font-semibold text-lg mb-4">Wellness Tips for Week {selectedWeek}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <HealthTipCard title="Nutrition" description="Focus on iron-rich foods and stay hydrated." category="nutrition" />
-            <HealthTipCard title="Rest" description="Prioritize 7-9 hours of sleep. Use pillows for support." category="wellness" />
-            <HealthTipCard title="Exercise" description="Gentle walking and prenatal yoga are excellent choices." category="wellness" />
-            <HealthTipCard title="Hydration" description="Drink 8-10 glasses of water daily to support amniotic fluid." category="nutrition" />
+            <HealthTipCard icon={<Apple className="w-5 h-5" />} title="Nutrition" description="Focus on iron-rich foods and stay hydrated." category="nutrition" />
+            <HealthTipCard icon={<Moon className="w-5 h-5" />} title="Rest" description="Prioritize 7-9 hours of sleep. Use pillows for support." category="wellness" />
+            <HealthTipCard icon={<Activity className="w-5 h-5" />} title="Exercise" description="Gentle walking and prenatal yoga are excellent choices." category="wellness" />
+            <HealthTipCard icon={<Droplets className="w-5 h-5" />} title="Hydration" description="Drink 8-10 glasses of water daily to support amniotic fluid." category="nutrition" />
           </div>
         </motion.div>
 

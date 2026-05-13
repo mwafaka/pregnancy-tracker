@@ -123,6 +123,7 @@ export function calculateWeightGain(
 
   const weeklyRate = weeksPregnant > 12 ? (currentGain - 2) / (weeksPregnant - 12) : 0;
   const targetRate = WEEKLY_GAIN_RATES[category];
+  if (!targetRate) return { recommendedGain: BMI_CATEGORIES.normal.gain, currentGain: Number(currentGain.toFixed(1)), weeklyRate: Number(weeklyRate.toFixed(2)), onTrack: false, byWeek: [] };
   const onTrack = weeklyRate >= targetRate.min && weeklyRate <= targetRate.max;
 
   const byWeek = Array.from({ length: PREGNANCY_DURATION_WEEKS }, (_, i) => {

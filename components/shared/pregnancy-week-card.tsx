@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Baby } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface PregnancyWeekCardProps {
+export interface PregnancyWeekCardProps {
   week: number;
   trimester: number;
   size: string;
