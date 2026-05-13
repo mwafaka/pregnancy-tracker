@@ -6,16 +6,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("en-US", {
+export function formatDate(date: Date, locale: string = "en"): string {
+  const lang = locale === "ar" ? "ar-SA" : "en-US";
+  return new Intl.DateTimeFormat(lang, {
     month: "long",
     day: "numeric",
     year: "numeric",
   }).format(date);
 }
 
-export function formatDateShort(date: Date): string {
-  return new Intl.DateTimeFormat("en-US", {
+export function formatDateShort(date: Date, locale: string = "en"): string {
+  const lang = locale === "ar" ? "ar-SA" : "en-US";
+  return new Intl.DateTimeFormat(lang, {
     month: "short",
     day: "numeric",
   }).format(date);

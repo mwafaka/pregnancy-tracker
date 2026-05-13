@@ -9,7 +9,6 @@ const DEFAULT_PROFILE: UserProfile = {
   onboardingComplete: false,
   lmp: null,
   dueDate: null,
-  dateOfBirth: null,
   isFirstPregnancy: true,
   symptoms: [],
   dietaryPreferences: [],

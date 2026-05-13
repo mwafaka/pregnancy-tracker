@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
-import { Heart, Github, Twitter } from "lucide-react";
+import { Heart } from "lucide-react";
 import { SITE_CONFIG, CALCULATOR_ROUTES } from "@/constants";
+import { useLocale } from "@/context/locale-context";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLocale();
 
   return (
     <footer className="border-t border-border mt-24">
@@ -22,7 +26,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display font-semibold text-sm mb-4">Calculators</h3>
+            <h3 className="font-display font-semibold text-sm mb-4">{t("footer.calculators")}</h3>
             <ul className="space-y-2">
               {CALCULATOR_ROUTES.slice(0, 4).map((item) => (
                 <li key={item.slug}>
@@ -38,14 +42,14 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-display font-semibold text-sm mb-4">Resources</h3>
+            <h3 className="font-display font-semibold text-sm mb-4">{t("footer.resources")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/pregnancy-week-by-week/week-1"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Week by Week
+                  {t("footer.weekByWeek")}
                 </Link>
               </li>
               <li>
@@ -53,7 +57,7 @@ export function Footer() {
                   href="/trimester/first-trimester"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  First Trimester
+                  {t("footer.firstTrimester")}
                 </Link>
               </li>
               <li>
@@ -61,7 +65,7 @@ export function Footer() {
                   href="/symptoms/nausea"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Pregnancy Symptoms
+                  {t("footer.pregnancySymptoms")}
                 </Link>
               </li>
               <li>
@@ -69,7 +73,7 @@ export function Footer() {
                   href="/nutrition/foods-to-avoid"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Nutrition Guide
+                  {t("footer.nutritionGuide")}
                 </Link>
               </li>
             </ul>
@@ -77,20 +81,20 @@ export function Footer() {
         </div>
 
         <div className="disclaimer-banner mb-8">
-          <p className="font-semibold text-xs mb-1">Medical Disclaimer</p>
+          <p className="font-semibold text-xs mb-1">{t("disclaimer.title")}</p>
           <p>{SITE_CONFIG.disclaimer}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            &copy; {currentYear} {SITE_CONFIG.name}. All rights reserved.
+            &copy; {currentYear} {SITE_CONFIG.name}. {t("footer.allRightsReserved")}
           </p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="text-xs text-muted-foreground hover:text-foreground">
-              Privacy
+              {t("footer.privacy")}
             </Link>
             <Link href="/impressum" className="text-xs text-muted-foreground hover:text-foreground">
-              Impressum
+              {t("footer.impressum")}
             </Link>
           </div>
         </div>

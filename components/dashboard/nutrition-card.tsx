@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Apple, Droplets, AlertTriangle, Pill } from "lucide-react";
 import { GlassCard } from "@/components/shared/glass-card";
 import { FOOD_RECOMMENDATIONS, getTrimesterForWeek } from "@/constants";
+import { useLocale } from "@/context/locale-context";
 
 interface NutritionCardProps {
   currentWeek: number;
@@ -12,6 +13,7 @@ interface NutritionCardProps {
 }
 
 export function NutritionCard({ currentWeek, waterIntake, onAddWater }: NutritionCardProps) {
+  const { t } = useLocale();
   const tri = getTrimesterForWeek(currentWeek);
   const foods = FOOD_RECOMMENDATIONS[tri];
 
@@ -19,13 +21,13 @@ export function NutritionCard({ currentWeek, waterIntake, onAddWater }: Nutritio
     <GlassCard>
       <div className="flex items-center gap-2 mb-4">
         <Apple className="w-5 h-5 text-green-500" />
-        <h3 className="font-display font-semibold text-lg">Nutrition Today</h3>
+        <h3 className="font-display font-semibold text-lg">{t("dashboard.nutritionToday")}</h3>
       </div>
 
       <div className="space-y-4">
         <div>
           <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2 flex items-center gap-1">
-            <Apple className="w-3.5 h-3.5" /> Recommended
+            <Apple className="w-3.5 h-3.5" /> {t("dashboard.recommended")}
           </p>
           <div className="space-y-1.5">
             {foods.recommended.map((item, i) => (
@@ -48,7 +50,7 @@ export function NutritionCard({ currentWeek, waterIntake, onAddWater }: Nutritio
 
         <div className="border-t border-border pt-4">
           <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2 flex items-center gap-1">
-            <AlertTriangle className="w-3.5 h-3.5" /> Foods to Avoid
+            <AlertTriangle className="w-3.5 h-3.5" /> {t("dashboard.foodsToAvoid")}
           </p>
           <div className="space-y-1.5">
             {foods.avoid.map((item, i) => (
@@ -65,7 +67,7 @@ export function NutritionCard({ currentWeek, waterIntake, onAddWater }: Nutritio
 
         <div className="border-t border-border pt-4">
           <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2 flex items-center gap-1">
-            <Pill className="w-3.5 h-3.5" /> Important Nutrients
+            <Pill className="w-3.5 h-3.5" /> {t("dashboard.importantNutrients")}
           </p>
           <div className="space-y-1.5">
             {foods.vitamins.map((item, i) => (
@@ -83,7 +85,7 @@ export function NutritionCard({ currentWeek, waterIntake, onAddWater }: Nutritio
         <div className="border-t border-border pt-4">
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold flex items-center gap-1">
-              <Droplets className="w-3.5 h-3.5" /> Water Intake Today
+              <Droplets className="w-3.5 h-3.5" /> {t("dashboard.waterIntakeToday")}
             </p>
             <span className="font-display font-bold text-lg gradient-text">{waterIntake}/10</span>
           </div>
@@ -105,7 +107,7 @@ export function NutritionCard({ currentWeek, waterIntake, onAddWater }: Nutritio
             ))}
           </div>
           <p className="text-xs text-muted-foreground mt-1.5 text-center">
-            Tap to log a glass &middot; 8-10 glasses recommended daily
+            {t("dashboard.tapToLogGlass")}
           </p>
         </div>
       </div>

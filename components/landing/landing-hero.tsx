@@ -5,8 +5,11 @@ import { ArrowRight, Shield, Heart, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FloatingGradient } from "@/components/shared/floating-gradient";
 import { fadeIn, fadeInUp, staggerContainer } from "@/animations";
+import { useLocale } from "@/context/locale-context";
 
 export function LandingHero() {
+  const { t, dir } = useLocale();
+
   return (
     <section className="relative min-h-[85vh] flex items-center overflow-hidden">
       <FloatingGradient className="top-20 -left-48" color1="rgba(248, 176, 122, 0.25)" speed="slow" />
@@ -22,39 +25,38 @@ export function LandingHero() {
         >
           <motion.div variants={fadeIn} className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8 text-sm">
             <Shield className="w-4 h-4 text-peach-500" />
-            <span className="text-muted-foreground">Medically reviewed content</span>
+            <span className="text-muted-foreground">{t("hero.medicallyReviewed")}</span>
           </motion.div>
 
           <motion.h1
             variants={fadeInUp}
             className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6"
           >
-            Your Pregnancy
+            {t("hero.title1")}
             <br />
-            <span className="gradient-text">Journey, Tracked</span>
+            <span className="gradient-text">{t("hero.title2")}</span>
             <br />
-            With Care
+            {t("hero.title3")}
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Evidence-based tools, personalized tracking, and expert-reviewed resources
-            for every stage of your pregnancy — from conception to birth.
+            {t("hero.subtitle")}
           </motion.p>
 
           <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="gap-2 rounded-xl h-12 px-8 text-base" asChild>
               <a href="/onboarding">
-                Get Started
-                <ArrowRight className="w-5 h-5" />
+                {t("hero.getStarted")}
+                <ArrowRight className={`w-5 h-5 ${dir === "rtl" ? "rotate-180" : ""}`} />
               </a>
             </Button>
             <Button variant="outline" size="lg" className="rounded-xl h-12 px-8 text-base" asChild>
               <a href="/onboarding">
                 <Clock className="w-5 h-5" />
-                Set Up My Pregnancy
+                {t("hero.setUpPregnancy")}
               </a>
             </Button>
           </motion.div>
@@ -65,15 +67,15 @@ export function LandingHero() {
           >
             <span className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-pink-400" />
-              FDA compliant
+              {t("hero.fdaCompliant")}
             </span>
             <span className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-pink-400" />
-              HIPAA ready
+              {t("hero.hipaaReady")}
             </span>
             <span className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-pink-400" />
-              Expert reviewed
+              {t("hero.expertReviewed")}
             </span>
           </motion.div>
         </motion.div>

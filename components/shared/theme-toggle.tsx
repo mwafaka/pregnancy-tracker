@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
+import { useLocale } from "@/context/locale-context"
 
 interface ThemeToggleProps {
   className?: string
@@ -11,6 +12,7 @@ interface ThemeToggleProps {
 export function ThemeToggle({ className }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const { t } = useLocale()
 
   useEffect(() => {
     setMounted(true)
@@ -28,7 +30,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400",
         className,
       )}
-      aria-label="Toggle theme"
+      aria-label={t("theme.toggle")}
     >
       <SunIcon
         className={cn(

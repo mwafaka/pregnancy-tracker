@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fadeInUp } from "@/animations";
+import { useLocale } from "@/context/locale-context";
 import Link from "next/link";
 
 export function LandingCTA() {
+  const { t, dir } = useLocale();
+
   return (
     <section className="relative py-24">
       <div className="max-w-4xl mx-auto px-4 text-center">
@@ -25,23 +28,22 @@ export function LandingCTA() {
             </div>
 
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Start Your Journey
+              {t("cta.title")}
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto mb-8 leading-relaxed">
-              Join millions of parents who trust us for evidence-based pregnancy tracking.
-              No account needed. No data shared.
+              {t("cta.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button size="lg" className="gap-2 rounded-xl h-12 px-8" asChild>
                   <Link href="/onboarding">
-                    Start Your Journey
-                    <ArrowRight className="w-5 h-5" />
+                    {t("cta.button")}
+                    <ArrowRight className={`w-5 h-5 ${dir === "rtl" ? "rotate-180" : ""}`} />
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-xl h-12 px-8" asChild>
                   <Link href="/tools/due-date-calculator">
-                    Quick Calculators
+                    {t("cta.quickCalculators")}
                   </Link>
                 </Button>
             </div>

@@ -51,8 +51,8 @@ export const WEEKLY_GAIN_RATES: Record<string, { min: number; max: number }> = {
 };
 
 export const NAV_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "Dashboard", href: "/dashboard" },
+  { label: "Home", labelKey: "nav.home", href: "/" },
+  { label: "Dashboard", labelKey: "nav.dashboard", href: "/dashboard" },
 ] as const;
 
 export const CALCULATOR_ROUTES = [

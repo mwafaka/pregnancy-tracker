@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Plus, X } from "lucide-react";
 import { GlassCard } from "@/components/shared/glass-card";
 import { SYMPTOMS, getWeeklyInsight } from "@/constants";
+import { useLocale } from "@/context/locale-context";
 
 interface SymptomCheckinProps {
   currentWeek: number;
@@ -15,13 +16,14 @@ interface SymptomCheckinProps {
 }
 
 const MOODS = [
-  { key: "great" as const, emoji: "😊", label: "Great" },
-  { key: "good" as const, emoji: "🙂", label: "Good" },
-  { key: "okay" as const, emoji: "😐", label: "Okay" },
-  { key: "rough" as const, emoji: "😢", label: "Rough" },
+  { key: "great" as const, emoji: "😊", labelKey: "dashboard.great" },
+  { key: "good" as const, emoji: "🙂", labelKey: "dashboard.good" },
+  { key: "okay" as const, emoji: "😐", labelKey: "dashboard.okay" },
+  { key: "rough" as const, emoji: "😢", labelKey: "dashboard.rough" },
 ];
 
 export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodChange, onSymptomsChange }: SymptomCheckinProps) {
+  const { t } = useLocale();
   const [showSelector, setShowSelector] = useState(false);
   const insight = getWeeklyInsight(currentWeek)!;
 
@@ -46,12 +48,12 @@ export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodCh
     <GlassCard>
       <div className="flex items-center gap-2 mb-4">
         <Activity className="w-5 h-5 text-lavender-500" />
-        <h3 className="font-display font-semibold text-lg">How are you feeling?</h3>
+        <h3 className="font-display font-semibold text-lg">{t("dashboard.howAreYouFeeling")}</h3>
       </div>
 
       <div className="space-y-4">
         <div>
-          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">Your Mood</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">{t("dashboard.yourMood")}</p>
           <div className="flex gap-2">
             {MOODS.map((m) => (
               <motion.button
@@ -65,7 +67,7 @@ export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodCh
                 }`}
               >
                 <span className="text-2xl">{m.emoji}</span>
-                <span className="text-xs font-medium">{m.label}</span>
+                <span className="text-xs font-medium">{t(m.labelKey)}</span>
               </motion.button>
             ))}
           </div>
@@ -74,13 +76,13 @@ export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodCh
         <div>
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-              Symptoms {todaySymptoms.length > 0 && `(${todaySymptoms.length})`}
+              {t("dashboard.symptoms")} {todaySymptoms.length > 0 && `(${todaySymptoms.length})`}
             </p>
             <button
               onClick={() => setShowSelector(!showSelector)}
               className="text-xs text-primary hover:text-primary/80 flex items-center gap-1 transition-colors"
             >
-              <Plus className="w-3.5 h-3.5" /> Add symptom
+              <Plus className="w-3.5 h-3.5" /> {t("dashboard.addSymptom")}
             </button>
           </div>
 
@@ -146,7 +148,7 @@ export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodCh
             ))}
             {todaySymptoms.length === 0 && (
               <p className="text-sm text-muted-foreground text-center py-2">
-                Tap &quot;Add symptom&quot; to log how you&apos;re feeling
+                {t("dashboard.tapAddSymptom")}
               </p>
             )}
           </div>
@@ -154,7 +156,7 @@ export function SymptomCheckin({ currentWeek, todayMood, todaySymptoms, onMoodCh
 
         <div className="border-t border-border pt-3">
           <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
-            Common this week
+            {t("dashboard.commonThisWeek")}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {insight.commonSymptoms.map((s) => (

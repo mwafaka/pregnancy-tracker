@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ClipboardList, Plus, X, Check, RotateCcw, ChevronDown, ChevronUp } from "lucide-react";
 import { GlassCard } from "@/components/shared/glass-card";
 import { BIRTH_PLAN_CATEGORIES } from "@/constants";
+import { useLocale } from "@/context/locale-context";
 import type { BirthPlanItem } from "@/types";
 
 interface BirthPlanCardProps {
@@ -17,6 +18,7 @@ interface BirthPlanCardProps {
 }
 
 export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onReset }: BirthPlanCardProps) {
+  const { t } = useLocale();
   const [expanded, setExpanded] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [newText, setNewText] = useState("");
@@ -34,9 +36,6 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
     setShowAdd(false);
   };
 
-  const categoryLabel = (key: BirthPlanItem["category"]) =>
-    BIRTH_PLAN_CATEGORIES.find((c) => c.key === key)?.label ?? key;
-
   const categoryIcon = (key: BirthPlanItem["category"]) =>
     BIRTH_PLAN_CATEGORIES.find((c) => c.key === key)?.icon ?? "📋";
 
@@ -45,7 +44,7 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-2">
           <ClipboardList className="w-5 h-5 text-lavender-500" />
-          <h3 className="font-display font-semibold text-lg">Birth Plan</h3>
+          <h3 className="font-display font-semibold text-lg">{t("dashboard.birthPlan")}</h3>
         </div>
         <button
           onClick={() => setExpanded(!expanded)}
@@ -121,7 +120,7 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
                 onClick={() => setViewAll(!viewAll)}
                 className="text-xs text-primary hover:text-primary/80 transition-colors mb-3"
               >
-                {viewAll ? "Show less" : `View all ${items.length} items`}
+                {viewAll ? t("common.showLess") : `${t("common.viewAll")} ${items.length} ${t("common.items")}`}
               </button>
             )}
 
@@ -131,7 +130,7 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
                   <input
                     value={newText}
                     onChange={(e) => setNewText(e.target.value)}
-                    placeholder="Add your own item..."
+                    placeholder={t("dashboard.addYourOwnItem")}
                     className="flex-1 h-9 rounded-xl border border-input bg-background px-3 text-sm focus-ring"
                     onKeyDown={(e) => e.key === "Enter" && handleAdd()}
                     autoFocus
@@ -149,7 +148,7 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
                     onClick={handleAdd}
                     className="h-9 px-3 rounded-xl bg-gradient-to-br from-lavender-400 to-pink-400 text-white text-xs font-medium hover:from-lavender-500 hover:to-pink-500 transition-all"
                   >
-                    Add
+                    {t("common.add")}
                   </button>
                   <button
                     onClick={() => setShowAdd(false)}
@@ -164,13 +163,13 @@ export function BirthPlanCard({ items, progress, onToggle, onAdd, onRemove, onRe
                     onClick={() => setShowAdd(true)}
                     className="flex items-center gap-1 h-9 px-4 rounded-xl bg-muted/50 hover:bg-muted text-xs font-medium transition-colors"
                   >
-                    <Plus className="w-3.5 h-3.5" /> Add item
+                    <Plus className="w-3.5 h-3.5" /> {t("dashboard.addItem")}
                   </button>
                   <button
                     onClick={onReset}
-                    className="flex items-center gap-1 h-9 px-4 rounded-xl bg-muted/50 hover:bg-muted text-xs font-medium text-muted-foreground transition-colors ml-auto"
+                    className="flex items-center gap-1 h-9 px-4 rounded-xl bg-muted/50 hover:bg-muted text-xs font-medium text-muted-foreground transition-colors ltr:ml-auto rtl:mr-auto"
                   >
-                    <RotateCcw className="w-3 h-3" /> Reset
+                    <RotateCcw className="w-3 h-3" /> {t("common.reset")}
                   </button>
                 </>
               )}

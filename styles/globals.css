@@ -79,6 +79,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  html[dir="rtl"] {
+    --font-inter: "Inter", "Noto Sans Arabic", sans-serif;
+  }
+
+  html[dir="rtl"] body {
+    font-feature-settings: normal;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";

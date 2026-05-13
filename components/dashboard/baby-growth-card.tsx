@@ -6,26 +6,28 @@ import { GlassCard } from "@/components/shared/glass-card";
 import { BabyGrowthSVG } from "@/components/shared/baby-growth-svg";
 import { calculateBabyGrowth } from "@/calculators";
 import { FRUIT_COMPARISONS, getTrimesterForWeek } from "@/constants";
+import { useLocale } from "@/context/locale-context";
 
 interface BabyGrowthCardProps {
   currentWeek: number;
 }
 
 export function BabyGrowthCard({ currentWeek }: BabyGrowthCardProps) {
+  const { t } = useLocale();
   const growth = calculateBabyGrowth(currentWeek);
   const fruit = FRUIT_COMPARISONS[currentWeek] ?? { emoji: "🌸", fruit: growth.size };
   const trimester = getTrimesterForWeek(currentWeek);
 
-  const stageLabel =
-    trimester === 1 ? "Embryonic Stage" :
-    trimester === 2 ? "Fetal Development" :
-    "Nearly Ready!";
+  const stageLabelKey =
+    trimester === 1 ? "dashboard.embryonicStage" :
+    trimester === 2 ? "dashboard.fetalDevelopment" :
+    "dashboard.nearlyReady";
 
   return (
     <GlassCard>
       <div className="flex items-center gap-2 mb-4">
         <Baby className="w-5 h-5 text-peach-500" />
-        <h3 className="font-display font-semibold text-lg">Your Baby This Week</h3>
+        <h3 className="font-display font-semibold text-lg">{t("dashboard.yourBabyThisWeek")}</h3>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-5">
@@ -37,7 +39,7 @@ export function BabyGrowthCard({ currentWeek }: BabyGrowthCardProps) {
             transition={{ delay: 0.4 }}
             className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-medium text-muted-foreground/60 uppercase tracking-wider whitespace-nowrap"
           >
-            {stageLabel}
+            {t(stageLabelKey)}
           </motion.div>
         </div>
 
@@ -52,18 +54,18 @@ export function BabyGrowthCard({ currentWeek }: BabyGrowthCardProps) {
               {fruit.emoji}
             </motion.span>
             <div>
-              <p className="text-xs text-muted-foreground">Size of a</p>
+              <p className="text-xs text-muted-foreground">{t("dashboard.sizeOfA")}</p>
               <p className="text-lg font-display font-bold">{fruit.fruit}</p>
             </div>
           </div>
 
           <div className="flex gap-4 justify-center sm:justify-start">
             <div className="rounded-xl bg-muted/50 px-3 py-2">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Length</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{t("common.length")}</p>
               <p className="font-semibold text-sm">{growth.length}</p>
             </div>
             <div className="rounded-xl bg-muted/50 px-3 py-2">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Weight</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{t("common.weight")}</p>
               <p className="font-semibold text-sm">{growth.weight}</p>
             </div>
           </div>

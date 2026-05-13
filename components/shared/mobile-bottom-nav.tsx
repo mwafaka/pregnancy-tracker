@@ -7,20 +7,22 @@ import {
   LayoutDashboard,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLocale } from "@/context/locale-context"
 
 interface NavItem {
   href: string
-  label: string
+  labelKey: string
   icon: typeof Home
 }
 
 const navItems: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/", label: "Home", icon: Home },
+  { href: "/dashboard", labelKey: "bottomNav.dashboard", icon: LayoutDashboard },
+  { href: "/", labelKey: "bottomNav.home", icon: Home },
 ]
 
 export function MobileBottomNav() {
   const pathname = usePathname()
+  const { t } = useLocale()
 
   return (
     <nav
@@ -46,7 +48,7 @@ export function MobileBottomNav() {
               )}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{item.label}</span>
+              <span className="text-[10px] font-medium">{t(item.labelKey)}</span>
               {isActive && (
                 <div className="h-1 w-6 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
               )}

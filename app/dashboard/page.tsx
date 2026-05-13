@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Sparkles } from "lucide-react";
 import { usePregnancy } from "@/context/pregnancy-context";
+import { useLocale } from "@/context/locale-context";
 import { PregnancyProgress } from "@/components/dashboard/pregnancy-progress";
 import { BabyGrowthCard } from "@/components/dashboard/baby-growth-card";
 import { NutritionCard } from "@/components/dashboard/nutrition-card";
@@ -16,6 +17,7 @@ import { staggerContainer, fadeInUp } from "@/animations";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { t } = useLocale();
   const {
     isOnboarded,
     currentWeek,
@@ -61,8 +63,8 @@ export default function DashboardPage() {
               <Sparkles className="w-5 h-5 text-peach-600 dark:text-peach-300" />
             </div>
             <div>
-              <h1 className="text-xl font-display font-bold">Your Pregnancy</h1>
-              <p className="text-xs text-muted-foreground">Here&apos;s everything at a glance</p>
+              <h1 className="text-xl font-display font-bold">{t("dashboard.title")}</h1>
+              <p className="text-xs text-muted-foreground">{t("dashboard.subtitle")}</p>
             </div>
           </motion.div>
 
@@ -114,8 +116,8 @@ export default function DashboardPage() {
           </motion.div>
 
           <div className="disclaimer-banner mt-6">
-            <p className="font-semibold text-xs mb-1">Medical Disclaimer</p>
-            <p>This dashboard is for informational tracking only and is not a substitute for professional prenatal care. Always consult your healthcare provider for medical decisions.</p>
+            <p className="font-semibold text-xs mb-1">{t("disclaimer.title")}</p>
+            <p>{t("disclaimer.dashboard")}</p>
           </div>
         </motion.div>
       </div>

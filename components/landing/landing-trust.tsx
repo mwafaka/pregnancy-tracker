@@ -4,17 +4,20 @@ import { motion } from "framer-motion";
 import { Verified, Lock, Users, Award, ShieldCheck, Eye } from "lucide-react";
 import { AnimatedStat } from "@/components/shared/animated-stat";
 import { fadeInUp, staggerContainer } from "@/animations";
+import { useLocale } from "@/context/locale-context";
 
 const trustPoints = [
-  { icon: Verified, title: "Medically Reviewed", description: "All content reviewed by board-certified OB-GYNs." },
-  { icon: Lock, title: "Your Data Stays Private", description: "All calculations happen locally. Nothing leaves your device." },
-  { icon: Users, title: "1M+ Monthly Users", description: "Trusted by millions of parents-to-be worldwide." },
-  { icon: Award, title: "Evidence-Based", description: "All tools are built on peer-reviewed medical research." },
-  { icon: ShieldCheck, title: "HIPAA Compliant", description: "Enterprise-grade security and privacy protections." },
-  { icon: Eye, title: "Transparent Methods", description: "All calculation formulas are documented and verifiable." },
+  { icon: Verified, titleKey: "trust.medicallyReviewed", descKey: "trust.medicallyReviewedDesc" },
+  { icon: Lock, titleKey: "trust.dataStaysPrivate", descKey: "trust.dataStaysPrivateDesc" },
+  { icon: Users, titleKey: "trust.monthlyUsers", descKey: "trust.monthlyUsersDesc" },
+  { icon: Award, titleKey: "trust.evidenceBased", descKey: "trust.evidenceBasedDesc" },
+  { icon: ShieldCheck, titleKey: "trust.hipaaCompliant", descKey: "trust.hipaaCompliantDesc" },
+  { icon: Eye, titleKey: "trust.transparentMethods", descKey: "trust.transparentMethodsDesc" },
 ];
 
 export function LandingTrust() {
+  const { t } = useLocale();
+
   return (
     <section className="relative py-24">
       <div className="max-w-7xl mx-auto px-4">
@@ -26,17 +29,17 @@ export function LandingTrust() {
           className="text-center mb-16"
         >
           <motion.h2 variants={fadeInUp} className="section-title mb-4">
-            Built With Trust
+            {t("trust.title")}
           </motion.h2>
           <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto">
-            Your health information deserves the highest standards of privacy and accuracy.
+            {t("trust.subtitle")}
           </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <AnimatedStat value="1M+" label="Monthly Active Users" delay={0} />
-          <AnimatedStat value="99.9%" label="Uptime" delay={0.1} />
-          <AnimatedStat value="4.9★" label="User Rating" delay={0.2} />
+          <AnimatedStat value="1M+" label={t("trust.monthlyActiveUsers")} delay={0} />
+          <AnimatedStat value="99.9%" label={t("trust.uptime")} delay={0.1} />
+          <AnimatedStat value="4.9★" label={t("trust.userRating")} delay={0.2} />
         </div>
 
         <motion.div
@@ -50,7 +53,7 @@ export function LandingTrust() {
             const Icon = point.icon;
             return (
               <motion.div
-                key={point.title}
+                key={point.titleKey}
                 variants={fadeInUp}
                 className="flex gap-4 glass rounded-2xl p-5"
               >
@@ -58,8 +61,8 @@ export function LandingTrust() {
                   <Icon className="w-5 h-5 text-peach-500" />
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-sm mb-1">{point.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{point.description}</p>
+                  <h3 className="font-display font-semibold text-sm mb-1">{t(point.titleKey)}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{t(point.descKey)}</p>
                 </div>
               </motion.div>
             );

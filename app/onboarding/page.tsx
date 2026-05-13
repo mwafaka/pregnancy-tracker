@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { FloatingGradient } from "@/components/shared/floating-gradient";
 import { GlassCard } from "@/components/shared/glass-card";
 import { usePregnancy } from "@/context/pregnancy-context";
+import { useLocale } from "@/context/locale-context";
 import { SYMPTOMS, DIETARY_PREFERENCES, VITAMINS } from "@/constants";
 import { fadeIn, fadeInUp, staggerContainer } from "@/animations";
 
@@ -17,11 +18,11 @@ const TOTAL_STEPS = 3;
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { t, dir } = useLocale();
   const { profile, updateProfile, completeOnboarding } = usePregnancy();
   const [step, setStep] = useState(0);
   const [lmp, setLmp] = useState(profile.lmp ?? "");
   const [dueDate, setDueDate] = useState(profile.dueDate ?? "");
-  const [dateOfBirth, setDateOfBirth] = useState(profile.dateOfBirth ?? "");
   const [isFirstPregnancy, setIsFirstPregnancy] = useState(profile.isFirstPregnancy);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>(profile.symptoms);
   const [selectedDiets, setSelectedDiets] = useState<string[]>(profile.dietaryPreferences);
@@ -32,7 +33,6 @@ export default function OnboardingPage() {
 
   const canProceed = () => {
     if (step === 0) return lmp.length > 0;
-    if (step === 1) return dateOfBirth.length > 0;
     return true;
   };
 
@@ -44,10 +44,7 @@ export default function OnboardingPage() {
       });
     }
     if (step === 1) {
-      updateProfile({
-        dateOfBirth: dateOfBirth || null,
-        isFirstPregnancy,
-      });
+      updateProfile({ isFirstPregnancy });
     }
     if (step < TOTAL_STEPS - 1) {
       setStep(step + 1);
@@ -62,7 +59,6 @@ export default function OnboardingPage() {
     updateProfile({
       lmp: lmp || null,
       dueDate: dueDate || null,
-      dateOfBirth: dateOfBirth || null,
       isFirstPregnancy,
       symptoms: selectedSymptoms,
       dietaryPreferences: selectedDiets,
@@ -73,16 +69,19 @@ export default function OnboardingPage() {
   };
 
   const stepTitle = [
-    "When is your baby due?",
-    "Tell us about yourself",
-    "Your preferences",
+    t("onboarding.step1Title"),
+    t("onboarding.step2Title"),
+    t("onboarding.step3Title"),
   ][step];
 
   const stepDescription = [
-    "We'll calculate your pregnancy progress automatically.",
-    "This helps us personalize your experience.",
-    "So we can give you the most relevant information.",
+    t("onboarding.step1Desc"),
+    t("onboarding.step2Desc"),
+    t("onboarding.step3Desc"),
   ][step];
+
+  const ArrowIcon = dir === "rtl" ? ArrowLeft : ArrowRight;
+  const BackIcon = dir === "rtl" ? ArrowRight : ArrowLeft;
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -121,15 +120,15 @@ export default function OnboardingPage() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: dir === "rtl" ? -20 : 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, x: dir === "rtl" ? 20 : -20 }}
                 transition={{ duration: 0.3 }}
               >
                 {step === 0 && (
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="lmp">First day of your last period</Label>
+                      <Label htmlFor="lmp">{t("onboarding.lmpLabel")}</Label>
                       <Input
                         id="lmp"
                         type="date"
@@ -138,11 +137,11 @@ export default function OnboardingPage() {
                         className="mt-1.5"
                       />
                       <p className="text-xs text-muted-foreground mt-1.5">
-                        This is how we calculate your due date and current week.
+                        {t("onboarding.lmpDesc")}
                       </p>
                     </div>
                     <div>
-                      <Label htmlFor="dueDate">Or enter your due date (optional)</Label>
+                      <Label htmlFor="dueDate">{t("onboarding.dueDateLabel")}</Label>
                       <Input
                         id="dueDate"
                         type="date"
@@ -151,7 +150,7 @@ export default function OnboardingPage() {
                         className="mt-1.5"
                       />
                       <p className="text-xs text-muted-foreground mt-1.5">
-                        If you know your due date from a doctor, enter it here.
+                        {t("onboarding.dueDateDesc")}
                       </p>
                     </div>
                   </div>
@@ -160,17 +159,7 @@ export default function OnboardingPage() {
                 {step === 1 && (
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="dob">Your date of birth</Label>
-                      <Input
-                        id="dob"
-                        type="date"
-                        value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
-                        className="mt-1.5"
-                      />
-                    </div>
-                    <div>
-                      <Label className="mb-2 block">Is this your first pregnancy?</Label>
+                      <Label className="mb-2 block">{t("onboarding.firstPregnancy")}</Label>
                       <div className="flex gap-3">
                         <button
                           onClick={() => setIsFirstPregnancy(true)}
@@ -181,7 +170,7 @@ export default function OnboardingPage() {
                           }`}
                         >
                           <Baby className="w-5 h-5 mx-auto mb-1" />
-                          Yes, first baby
+                          {t("onboarding.yesFirstBaby")}
                         </button>
                         <button
                           onClick={() => setIsFirstPregnancy(false)}
@@ -192,7 +181,7 @@ export default function OnboardingPage() {
                           }`}
                         >
                           <Sparkles className="w-5 h-5 mx-auto mb-1" />
-                          I&apos;ve done this before
+                          {t("onboarding.doneThisBefore")}
                         </button>
                       </div>
                     </div>
@@ -203,7 +192,7 @@ export default function OnboardingPage() {
                   <div className="space-y-5 max-h-[400px] overflow-y-auto">
                     <div>
                       <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
-                        Any symptoms? (tap all that apply)
+                        {t("onboarding.symptoms")}
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {SYMPTOMS.map((s) => (
@@ -224,7 +213,7 @@ export default function OnboardingPage() {
 
                     <div>
                       <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
-                        Dietary preferences
+                        {t("onboarding.dietaryPreferences")}
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {DIETARY_PREFERENCES.map((d) => (
@@ -245,7 +234,7 @@ export default function OnboardingPage() {
 
                     <div>
                       <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-2">
-                        Vitamins & supplements you take
+                        {t("onboarding.vitamins")}
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {VITAMINS.map((v) => (
@@ -271,16 +260,16 @@ export default function OnboardingPage() {
             <div className="flex gap-3 mt-6">
               {step > 0 && (
                 <Button variant="outline" onClick={handleBack} className="flex-1">
-                  <ArrowLeft className="w-4 h-4" /> Back
+                  <BackIcon className="w-4 h-4" /> {t("common.back")}
                 </Button>
               )}
               {step < TOTAL_STEPS - 1 ? (
                 <Button onClick={handleNext} disabled={!canProceed()} className="flex-1">
-                  Next <ArrowRight className="w-4 h-4" />
+                  {t("common.next")} <ArrowIcon className="w-4 h-4" />
                 </Button>
               ) : (
                 <Button onClick={handleComplete} className="flex-1 gap-2">
-                  <Heart className="w-4 h-4" /> Start Your Journey
+                  <Heart className="w-4 h-4" /> {t("onboarding.startJourney")}
                 </Button>
               )}
             </div>

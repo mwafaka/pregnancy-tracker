@@ -126,7 +126,6 @@ export interface UserProfile {
   onboardingComplete: boolean;
   lmp: string | null;
   dueDate: string | null;
-  dateOfBirth: string | null;
   isFirstPregnancy: boolean;
   symptoms: string[];
   dietaryPreferences: string[];
