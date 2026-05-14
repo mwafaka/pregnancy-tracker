@@ -1,9 +1,9 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import { addDays, differenceInDays, startOfDay, isValid, parseISO } from "date-fns";
 import type { UserProfile, SymptomEntry, BirthPlanItem } from "@/types";
-import { PREGNANCY_DURATION_DAYS, PREGNANCY_DURATION_WEEKS, PROFILE_STORAGE_KEY, SYMPTOM_STORAGE_KEY, BIRTH_PLAN_STORAGE_KEY, BIRTH_PLAN_SUGGESTIONS } from "@/constants";
+import { PREGNANCY_DURATION_DAYS, PREGNANCY_DURATION_WEEKS, BIRTH_PLAN_SUGGESTIONS } from "@/constants";
 
 const DEFAULT_PROFILE: UserProfile = {
   onboardingComplete: false,
@@ -49,98 +49,19 @@ function getTodayISO(): string {
   return startOfDay(new Date()).toISOString().split("T")[0] ?? "";
 }
 
-function loadProfile(): UserProfile {
-  if (typeof window === "undefined") return DEFAULT_PROFILE;
-  try {
-    const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      return { ...DEFAULT_PROFILE, ...parsed };
-    }
-  } catch { /* ignore */ }
-  return DEFAULT_PROFILE;
-}
-
-function loadTodayEntry(): SymptomEntry {
-  if (typeof window === "undefined") return { date: getTodayISO(), mood: null, symptoms: [], waterIntake: 0 };
-  try {
-    const stored = localStorage.getItem(SYMPTOM_STORAGE_KEY);
-    if (stored) {
-      const all = JSON.parse(stored) as SymptomEntry[];
-      const today = getTodayISO();
-      const existing = all.find((e) => e.date === today);
-      if (existing) return existing;
-    }
-  } catch { /* ignore */ }
-  return { date: getTodayISO(), mood: null, symptoms: [], waterIntake: 0 };
-}
-
-function persistProfile(profile: UserProfile) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
-}
-
-function persistTodayEntry(entry: SymptomEntry) {
-  if (typeof window === "undefined") return;
-  try {
-    const stored = localStorage.getItem(SYMPTOM_STORAGE_KEY);
-    const all: SymptomEntry[] = stored ? JSON.parse(stored) : [];
-    const today = getTodayISO();
-    const idx = all.findIndex((e) => e.date === today);
-    if (idx >= 0) {
-      all[idx] = entry;
-    } else {
-      all.push(entry);
-    }
-    localStorage.setItem(SYMPTOM_STORAGE_KEY, JSON.stringify(all));
-  } catch { /* ignore */ }
-}
-
-function loadBirthPlan(): BirthPlanItem[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const stored = localStorage.getItem(BIRTH_PLAN_STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch { /* ignore */ }
-  return BIRTH_PLAN_SUGGESTIONS.map((s, i) => ({
-    id: `bp-${i}`,
-    text: s.text,
-    category: s.category,
-    completed: false,
-    locked: false,
-    order: i,
-  }));
-}
-
-function persistBirthPlan(items: BirthPlanItem[]) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(BIRTH_PLAN_STORAGE_KEY, JSON.stringify(items));
-}
-
 export function PregnancyProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILE);
   const [todayEntry, setTodayEntry] = useState<SymptomEntry>({ date: getTodayISO(), mood: null, symptoms: [], waterIntake: 0 });
-  const [birthPlan, setBirthPlan] = useState<BirthPlanItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setProfile(loadProfile());
-    setTodayEntry(loadTodayEntry());
-    setBirthPlan(loadBirthPlan());
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (hydrated) persistProfile(profile);
-  }, [profile, hydrated]);
-
-  useEffect(() => {
-    if (hydrated) persistTodayEntry(todayEntry);
-  }, [todayEntry, hydrated]);
-
-  useEffect(() => {
-    if (hydrated) persistBirthPlan(birthPlan);
-  }, [birthPlan, hydrated]);
+  const [birthPlan, setBirthPlan] = useState<BirthPlanItem[]>(
+    BIRTH_PLAN_SUGGESTIONS.map((s, i) => ({
+      id: `bp-${i}`,
+      text: s.text,
+      category: s.category,
+      completed: false,
+      locked: false,
+      order: i,
+    }))
+  );
 
   const updateProfile = useCallback((updates: Partial<UserProfile>) => {
     setProfile((prev) => ({ ...prev, ...updates }));
@@ -152,9 +73,6 @@ export function PregnancyProvider({ children }: { children: ReactNode }) {
 
   const resetProfile = useCallback(() => {
     setProfile(DEFAULT_PROFILE);
-    if (typeof window !== "undefined") {
-      localStorage.removeItem(PROFILE_STORAGE_KEY);
-    }
   }, []);
 
   const updateTodaySymptoms = useCallback((symptoms: { name: string; severity: 1 | 2 | 3 }[]) => {
@@ -202,9 +120,6 @@ export function PregnancyProvider({ children }: { children: ReactNode }) {
       order: i,
     }));
     setBirthPlan(defaults);
-    if (typeof window !== "undefined") {
-      localStorage.removeItem(BIRTH_PLAN_STORAGE_KEY);
-    }
   }, []);
 
   // Derived calculations
@@ -220,7 +135,7 @@ export function PregnancyProvider({ children }: { children: ReactNode }) {
   const currentTrimester: 1 | 2 | 3 = currentWeek <= 13 ? 1 : currentWeek <= 27 ? 2 : 3;
   const daysRemaining = validLMP ? Math.max(0, PREGNANCY_DURATION_DAYS - daysPregnant) : 280;
   const weeksRemaining = validLMP ? Math.max(0, PREGNANCY_DURATION_WEEKS - currentWeek) : 40;
-  const isOnboarded = hydrated && profile.onboardingComplete;
+  const isOnboarded = profile.onboardingComplete;
   const birthPlanProgress = {
     completed: birthPlan.filter((i) => i.completed).length,
     total: birthPlan.length,

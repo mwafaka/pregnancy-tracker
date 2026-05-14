@@ -99,8 +99,6 @@ export const CALCULATOR_ROUTES = [
   { slug: "baby-growth-timeline", label: "Baby Growth Timeline", icon: "Baby" },
 ] as const;
 
-export const RESULTS_STORAGE_KEY = "pregnancy-tracker-results";
-
 // ─── SYMPTOM DATA ───
 export const SYMPTOMS = [
   "Nausea / Morning sickness",
@@ -350,11 +348,6 @@ export function getTrimesterForWeek(week: number): 1 | 2 | 3 {
   if (week <= 27) return 2;
   return 3;
 }
-
-export const PROFILE_STORAGE_KEY = "pregnancy-tracker-profile";
-export const SYMPTOM_STORAGE_KEY = "pregnancy-tracker-symptoms";
-export const BIRTH_PLAN_STORAGE_KEY = "pregnancy-tracker-birth-plan";
-export const THEME_STORAGE_KEY = "pregnancy-tracker-theme";
 
 // ─── BIRTH PLAN SUGGESTIONS ───
 export interface BirthPlanSuggestion {

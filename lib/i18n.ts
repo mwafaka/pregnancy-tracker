@@ -179,6 +179,7 @@ const messages: Record<Locale, Record<string, string>> = {
     // Dashboard
     "dashboard.title": "Your Pregnancy",
     "dashboard.subtitle": "Here's everything at a glance",
+    "dashboard.enterLmp": "Enter the first day of your last period to see your pregnancy status.",
     "dashboard.youreIn": "You're in",
     "dashboard.dueDate": "Due Date",
     "dashboard.daysToGo": "Days to go",
@@ -449,6 +450,7 @@ const messages: Record<Locale, Record<string, string>> = {
     // Dashboard
     "dashboard.title": "حملك",
     "dashboard.subtitle": "كل شيء في لمحة",
+    "dashboard.enterLmp": "أدخلي اليوم الأول من آخر دورة شهرية لرؤية حالة حملك.",
     "dashboard.youreIn": "أنت الآن في",
     "dashboard.dueDate": "تاريخ الولادة",
     "dashboard.daysToGo": "الأيام المتبقية",

@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
-import { defaultLocale, locales, t as translate } from "@/lib/i18n";
+import { defaultLocale, t as translate } from "@/lib/i18n";
 
 interface LocaleContextType {
   locale: Locale;
@@ -13,23 +13,11 @@ interface LocaleContextType {
 
 const LocaleContext = createContext<LocaleContextType | null>(null);
 
-const STORAGE_KEY = "pregnancy-tracker-locale";
-
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && locales.includes(stored as Locale)) {
-      setLocaleState(stored as Locale);
-    }
-  }, []);
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem(STORAGE_KEY, newLocale);
     document.documentElement.lang = newLocale;
     document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
   }, []);

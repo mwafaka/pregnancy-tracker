@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface DateSelectProps {
@@ -19,22 +19,28 @@ const MONTHS = [
 
 export function DateSelect({ value, onChange, label, description, error, className }: DateSelectProps) {
   const currentYear = new Date().getFullYear();
-  const years = useMemo(() => [currentYear - 2, currentYear - 1, currentYear], [currentYear]);
+  const years = useMemo(() => [currentYear - 1, currentYear, currentYear + 1], [currentYear]);
 
   const parts = value ? value.split("-") : [];
-  const year = parts[0] || "";
-  const month = parts[1] || "";
-  const day = parts[2] || "";
+  const [localYear, setLocalYear] = useState(parts[0] || "");
+  const [localMonth, setLocalMonth] = useState(parts[1] || "");
+  const [localDay, setLocalDay] = useState(parts[2] || "");
+
+  useEffect(() => {
+    setLocalYear(parts[0] || "");
+    setLocalMonth(parts[1] || "");
+    setLocalDay(parts[2] || "");
+  }, [value]);
 
   const daysInMonth = useMemo(() => {
-    if (!year || !month) return 31;
-    return new Date(Number(year), Number(month), 0).getDate();
-  }, [year, month]);
+    if (!localYear || !localMonth) return 31;
+    return new Date(Number(localYear), Number(localMonth), 0).getDate();
+  }, [localYear, localMonth]);
 
   const handleChange = (field: "year" | "month" | "day", newValue: string) => {
-    const newYear = field === "year" ? newValue : year;
-    const newMonth = field === "month" ? newValue : month;
-    const newDay = field === "day" ? newValue : day;
+    const newYear = field === "year" ? newValue : localYear;
+    const newMonth = field === "month" ? newValue : localMonth;
+    const newDay = field === "day" ? newValue : localDay;
 
     let validDay = newDay;
     if (newYear && newMonth && newDay) {
@@ -44,13 +50,14 @@ export function DateSelect({ value, onChange, label, description, error, classNa
       }
     }
 
-    const y = newYear;
-    const m = newMonth.padStart(2, "0");
-    const d = validDay.padStart(2, "0");
-    if (y && m && d) {
-      onChange(`${y}-${m}-${d}`);
-    } else {
-      onChange("");
+    if (field === "year") setLocalYear(newValue);
+    if (field === "month") setLocalMonth(newValue);
+    if (field === "day") setLocalDay(newValue);
+
+    if (newYear && newMonth && validDay) {
+      const m = newMonth.padStart(2, "0");
+      const d = validDay.padStart(2, "0");
+      onChange(`${newYear}-${m}-${d}`);
     }
   };
 
@@ -67,7 +74,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
       {description && <p className="text-xs text-muted-foreground">{description}</p>}
       <div className="flex gap-2">
         <select
-          value={day}
+          value={localDay}
           onChange={(e) => handleChange("day", e.target.value)}
           className={selectClass}
           aria-label="Day"
@@ -78,7 +85,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
           ))}
         </select>
         <select
-          value={month}
+          value={localMonth}
           onChange={(e) => handleChange("month", e.target.value)}
           className={selectClass}
           aria-label="Month"
@@ -89,7 +96,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
           ))}
         </select>
         <select
-          value={year}
+          value={localYear}
           onChange={(e) => handleChange("year", e.target.value)}
           className={selectClass}
           aria-label="Year"
