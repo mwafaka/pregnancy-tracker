@@ -6,6 +6,7 @@ import { generateMetadata as generateBaseMetadata } from "@/seo/metadata";
 import { Calendar, User, ChevronRight } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { SITE_CONFIG } from "@/constants";
+import { generateBreadcrumbSchema } from "@/seo/json-ld";
 
 const contentPages: Record<string, { title: string; description: string; content: string; category: string; author: string; date: Date }> = {
   "understanding-pregnancy-trimesters": {
@@ -39,13 +40,48 @@ export async function generateMetadata({ params }: Props) {
   });
 }
 
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "",
+  description: "",
+  author: { "@type": "Person", name: SITE_CONFIG.author },
+  datePublished: "",
+  publisher: {
+    "@type": "Organization",
+    name: SITE_CONFIG.name,
+    logo: { "@type": "ImageObject", url: `${SITE_CONFIG.url}/icon.svg` },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": "" },
+};
+
 export default async function ContentPage({ params }: Props) {
   const { slug } = await params;
   const data = contentPages[slug];
   if (!data) notFound();
 
+  const pageUrl = `${SITE_CONFIG.url}/content/${slug}`;
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_CONFIG.url },
+    { name: data.category, url: `${SITE_CONFIG.url}/content` },
+    { name: data.title, url: pageUrl },
+  ]);
+
+  const pageArticleSchema = {
+    ...articleSchema,
+    headline: data.title,
+    description: data.description,
+    datePublished: data.date.toISOString(),
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbSchema, pageArticleSchema]) }}
+      />
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link href="/" className="hover:text-foreground">Home</Link>
         <ChevronRight className="w-3 h-3" />

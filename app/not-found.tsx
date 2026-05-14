@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SearchX } from "lucide-react";
+import type { Metadata } from "next";
+import { SITE_CONFIG } from "@/constants";
+
+export const metadata: Metadata = {
+  title: `Page Not Found | ${SITE_CONFIG.name}`,
+  description: "The page you are looking for does not exist or has been moved. Explore our pregnancy calculators and week-by-week guides.",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

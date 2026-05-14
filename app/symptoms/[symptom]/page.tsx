@@ -5,6 +5,7 @@ import { generateMetadata as generateBaseMetadata } from "@/seo/metadata";
 import { SITE_CONFIG } from "@/constants";
 import { AlertTriangle, Heart, Lightbulb, Stethoscope } from "lucide-react";
 import Link from "next/link";
+import { generateBreadcrumbSchema } from "@/seo/json-ld";
 
 const symptoms: Record<string, { title: string; description: string; tips: string[]; whenToCall: string; trimester: string }> = {
   nausea: {
@@ -47,8 +48,42 @@ export default async function SymptomPage({ params }: Props) {
   const data = symptoms[symptom];
   if (!data) notFound();
 
+  const pageUrl = `${SITE_CONFIG.url}/symptoms/${symptom}`;
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_CONFIG.url },
+    { name: "Pregnancy Symptoms", url: `${SITE_CONFIG.url}/symptoms` },
+    { name: data.title, url: pageUrl },
+  ]);
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `What is ${data.title.toLowerCase()}?`,
+        acceptedAnswer: { "@type": "Answer", text: data.description },
+      },
+      {
+        "@type": "Question",
+        name: `How can I manage ${data.title.toLowerCase()}?`,
+        acceptedAnswer: { "@type": "Answer", text: data.tips.join(". ") },
+      },
+      {
+        "@type": "Question",
+        name: `When should I contact my provider about ${data.title.toLowerCase()}?`,
+        acceptedAnswer: { "@type": "Answer", text: data.whenToCall },
+      },
+    ],
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbSchema, faqSchema]) }}
+      />
       <div className="mb-8">
         <Badge variant="secondary" className="rounded-full mb-3">{data.trimester}</Badge>
         <h1 className="text-3xl md:text-4xl font-display font-bold gradient-text mb-3">{data.title}</h1>

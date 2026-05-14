@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Heart, Baby, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DateSelect } from "@/components/shared/date-select";
 import { FloatingGradient } from "@/components/shared/floating-gradient";
 import { GlassCard } from "@/components/shared/glass-card";
 import { usePregnancy } from "@/context/pregnancy-context";
@@ -22,7 +22,6 @@ export default function OnboardingPage() {
   const { profile, updateProfile, completeOnboarding } = usePregnancy();
   const [step, setStep] = useState(0);
   const [lmp, setLmp] = useState(profile.lmp ?? "");
-  const [dueDate, setDueDate] = useState(profile.dueDate ?? "");
   const [isFirstPregnancy, setIsFirstPregnancy] = useState(profile.isFirstPregnancy);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>(profile.symptoms);
   const [selectedDiets, setSelectedDiets] = useState<string[]>(profile.dietaryPreferences);
@@ -40,7 +39,6 @@ export default function OnboardingPage() {
     if (step === 0) {
       updateProfile({
         lmp: lmp || null,
-        dueDate: dueDate || null,
       });
     }
     if (step === 1) {
@@ -58,7 +56,6 @@ export default function OnboardingPage() {
   const handleComplete = () => {
     updateProfile({
       lmp: lmp || null,
-      dueDate: dueDate || null,
       isFirstPregnancy,
       symptoms: selectedSymptoms,
       dietaryPreferences: selectedDiets,
@@ -128,30 +125,12 @@ export default function OnboardingPage() {
                 {step === 0 && (
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="lmp">{t("onboarding.lmpLabel")}</Label>
-                      <Input
-                        id="lmp"
-                        type="date"
+                      <DateSelect
                         value={lmp}
-                        onChange={(e) => setLmp(e.target.value)}
-                        className="mt-1.5"
+                        onChange={setLmp}
+                        label={t("onboarding.lmpLabel")}
+                        description={t("onboarding.lmpDesc")}
                       />
-                      <p className="text-xs text-muted-foreground mt-1.5">
-                        {t("onboarding.lmpDesc")}
-                      </p>
-                    </div>
-                    <div>
-                      <Label htmlFor="dueDate">{t("onboarding.dueDateLabel")}</Label>
-                      <Input
-                        id="dueDate"
-                        type="date"
-                        value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                        className="mt-1.5"
-                      />
-                      <p className="text-xs text-muted-foreground mt-1.5">
-                        {t("onboarding.dueDateDesc")}
-                      </p>
                     </div>
                   </div>
                 )}

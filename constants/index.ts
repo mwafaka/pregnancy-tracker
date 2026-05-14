@@ -5,6 +5,7 @@ export const SITE_CONFIG = {
     "Track your pregnancy week by week, calculate due dates, ovulation, and more. Evidence-based tools and resources for every stage of your journey.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pregnancytracker.com",
   locale: "en_US",
+  localeAr: "ar_SA",
   type: "MedicalWebPage" as const,
   author: "PregnancyTracker Medical Team",
   reviewer: "Dr. Sarah Mitchell, OB-GYN",
@@ -17,8 +18,41 @@ export const SITE_CONFIG = {
   },
   social: {
     twitter: "@pregnancytracker",
+    facebook: "PregnancyTracker",
+    instagram: "pregnancytracker",
   },
   version: "1.0.0",
+  siteImages: {
+    ogDefault: "/opengraph-image",
+    logo: "/icon.svg",
+  },
+  keywords: [
+    "pregnancy tracker",
+    "due date calculator",
+    "ovulation calculator",
+    "pregnancy week by week",
+    "pregnancy symptoms",
+    "pregnancy calculator",
+    "conception calculator",
+    "IVF calculator",
+    "pregnancy weight gain",
+    "baby growth timeline",
+    "prenatal health",
+    "pregnancy tools",
+    "first trimester",
+    "second trimester",
+    "third trimester",
+    "pregnancy nutrition",
+    "morning sickness relief",
+  ],
+  authorInfo: {
+    name: "PregnancyTracker Medical Team",
+    url: "https://pregnancytracker.com/about",
+  },
+  reviewerInfo: {
+    name: "Dr. Sarah Mitchell, OB-GYN",
+    url: "https://pregnancytracker.com/about#medical-review",
+  },
 } as const;
 
 export const PREGNANCY_DURATION_WEEKS = 40;

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { GlassCard } from "@/components/shared/glass-card";
 import { PregnancyWeekCard } from "@/components/shared/pregnancy-week-card";
 import { generateMetadata as generateBaseMetadata } from "@/seo/metadata";
+import { SITE_CONFIG } from "@/constants";
+import { generateBreadcrumbSchema } from "@/seo/json-ld";
 
 const trimesters = {
   "first-trimester": { num: 1, label: "First Trimester", weeks: "1–13", description: "The first trimester spans from week 1 to week 13. This is a period of rapid development where all major organs begin to form." },
@@ -39,8 +41,18 @@ export default async function TrimesterPage({ params }: Props) {
 
   const weeks = Array.from({ length: weekEnd - weekStart + 1 }, (_, i) => weekStart + i);
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_CONFIG.url },
+    { name: "Trimesters", url: `${SITE_CONFIG.url}/trimester` },
+    { name: data.label, url: `${SITE_CONFIG.url}/trimester/${trimester}` },
+  ]);
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="mb-8">
         <h1 className="text-4xl font-display font-bold gradient-text mb-3">{data.label}</h1>
         <p className="text-muted-foreground">{data.description}</p>

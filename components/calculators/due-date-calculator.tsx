@@ -2,11 +2,11 @@
 
 import { useState, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CalculatorInput } from "@/components/shared/calculator-input";
+import { DateSelect } from "@/components/shared/date-select";
 import { ResultPanel } from "@/components/shared/result-panel";
 import { GlassCard } from "@/components/shared/glass-card";
 import { fadeIn, staggerContainer } from "@/animations";
@@ -22,8 +22,8 @@ export function DueDateCalculator() {
   const [error, setError] = useState<string | null>(null);
 
   const {
-    register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<LMPFormData>({
     resolver: zodResolver(lmpDateSchema),
@@ -89,13 +89,18 @@ export function DueDateCalculator() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <CalculatorInput
-              label={t("calculator.dueDate.lmpLabel")}
-              description={t("calculator.dueDate.lmpDesc")}
-              type="date"
-              error={errors.lmpDate?.message}
-              icon={<Calendar className="w-4 h-4" />}
-              {...register("lmpDate")}
+            <Controller
+              name="lmpDate"
+              control={control}
+              render={({ field }) => (
+                <DateSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                  label={t("calculator.dueDate.lmpLabel")}
+                  description={t("calculator.dueDate.lmpDesc")}
+                  error={errors.lmpDate?.message}
+                />
+              )}
             />
 
             <Button type="submit" disabled={isSubmitting} className="w-full gap-2 rounded-xl">

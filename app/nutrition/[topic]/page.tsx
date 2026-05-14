@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { GlassCard } from "@/components/shared/glass-card";
 import { Badge } from "@/components/ui/badge";
 import { generateMetadata as generateBaseMetadata } from "@/seo/metadata";
+import { SITE_CONFIG } from "@/constants";
+import { generateBreadcrumbSchema } from "@/seo/json-ld";
 import { Apple, Banana, Carrot, Fish, Milk, XCircle } from "lucide-react";
 
 const nutritionTopics: Record<string, { title: string; description: string; foods: { name: string; reason: string; icon: string }[]; safeAlternatives: string[] }> = {
@@ -69,8 +71,18 @@ export default async function NutritionPage({ params }: Props) {
   const data = nutritionTopics[topic];
   if (!data) notFound();
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_CONFIG.url },
+    { name: "Nutrition Guide", url: `${SITE_CONFIG.url}/nutrition` },
+    { name: data.title, url: `${SITE_CONFIG.url}/nutrition/${topic}` },
+  ]);
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="mb-8">
         <Badge variant="secondary" className="rounded-full mb-3">Nutrition</Badge>
         <h1 className="text-3xl md:text-4xl font-display font-bold gradient-text mb-3">{data.title}</h1>

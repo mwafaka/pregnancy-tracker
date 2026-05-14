@@ -4,7 +4,7 @@ import { TimelineProgress } from "@/components/shared/timeline-progress";
 import { Badge } from "@/components/ui/badge";
 import { generateMetadata as generateBaseMetadata } from "@/seo/metadata";
 import { calculateBabyGrowth } from "@/calculators";
-import { PREGNANCY_DURATION_WEEKS, TRIMESTER_LABELS } from "@/constants";
+import { PREGNANCY_DURATION_WEEKS, TRIMESTER_LABELS, SITE_CONFIG } from "@/constants";
 import { Baby, Calendar, Apple, Ruler, Activity, Sparkles } from "lucide-react";
 
 const weekContent: Record<number, { title: string; development: string; tips: string[]; symptoms: string[] }> = {
@@ -98,8 +98,34 @@ export default async function WeekPage({ params }: Props) {
   const growth = calculateBabyGrowth(weekNum);
   const content = weekContent[weekNum];
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_CONFIG.url },
+      { "@type": "ListItem", position: 2, name: "Pregnancy Week by Week", item: `${SITE_CONFIG.url}/pregnancy-week-by-week` },
+      { "@type": "ListItem", position: 3, name: `Week ${weekNum}`, item: `${SITE_CONFIG.url}/pregnancy-week-by-week/week-${weekNum}` },
+    ],
+  };
+
+  const medicalSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    name: `Pregnancy Week ${weekNum}`,
+    description: content ? content.development : `What to expect at ${weekNum} weeks pregnant`,
+    lastReviewed: new Date().toISOString().split("T")[0],
+    specialty: "Obstetrics",
+    about: { "@type": "Thing", name: `Week ${weekNum} of Pregnancy` },
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([breadcrumbSchema, medicalSchema]),
+        }}
+      />
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-sm mb-4">
           <Calendar className="w-4 h-4 text-peach-500" />
