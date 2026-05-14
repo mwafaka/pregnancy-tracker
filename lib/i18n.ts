@@ -352,7 +352,7 @@ const messages: Record<Locale, Record<string, string>> = {
       "توفر هذه الحاسبة تقديرًا بناءً على الإرشادات الطبية القياسية. كل حمل فريد من نوعه. تأكد دائمًا من تاريخ ولادتك مع مقدم الرعاية الصحية من خلال الموجات فوق الصوتية والتقييم السريري.",
 
     // Landing - Hero
-    "hero.medicallyReviewed": "محتوى مراجع طبياً",
+    "hero.medicallyReviewed": "محتوى مراجع طبياً ",
     "hero.title1": "حملك",
     "hero.title2": "رحلتك، متتبعة",
     "hero.title3": "بعناية",
