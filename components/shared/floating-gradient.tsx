@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface FloatingGradientProps {
@@ -25,20 +22,11 @@ export function FloatingGradient({
   };
 
   return (
-    <motion.div
-      animate={{
-        x: [0, 30, -20, 0],
-        y: [0, -30, 20, 0],
-        scale: [1, 1.1, 0.95, 1],
-      }}
-      transition={{
-        duration: speed === "slow" ? 12 : 8,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
+    <div
       className={cn(
-        "floating-gradient",
+        "floating-gradient animate-float",
         sizeClasses[size],
+        speed === "slow" && "animate-float-slow",
         className
       )}
       style={{

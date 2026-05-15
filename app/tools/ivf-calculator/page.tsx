@@ -1,7 +1,13 @@
-import { IVFDueDateCalculator } from "@/components/calculators/ivf-calculator";
+import dynamic from "next/dynamic";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { generateMetadata } from "@/seo/metadata";
 import { generateToolSchema, generateBreadcrumbSchema } from "@/seo/json-ld";
 import { SITE_CONFIG } from "@/constants";
+
+const IVFDueDateCalculator = dynamic(
+  () => import("@/components/calculators/ivf-calculator").then((m) => m.IVFDueDateCalculator),
+  { loading: () => <SkeletonLoader variant="card" /> }
+);
 
 export const metadata = generateMetadata({
   title: "IVF Due Date Calculator",

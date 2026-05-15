@@ -37,18 +37,18 @@ export function MobileBottomNav() {
           const Icon = item.icon
 
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex flex-col items-center gap-1 rounded-xl px-3 py-1.5 transition-all duration-200",
-                isActive
-                  ? "text-purple-400"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              <Icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{t(item.labelKey)}</span>
+              <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex flex-col items-center justify-center gap-1 rounded-xl min-w-[48px] min-h-[48px] px-4 py-2 transition-all duration-200",
+                    isActive
+                      ? "text-purple-400"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className="text-[10px] font-medium leading-none">{t(item.labelKey)}</span>
               {isActive && (
                 <div className="h-1 w-6 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
               )}

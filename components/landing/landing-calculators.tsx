@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Calendar,
   CalendarDays,
@@ -12,7 +9,6 @@ import {
   Baby,
 } from "lucide-react";
 import { GlassCard } from "@/components/shared/glass-card";
-import { staggerContainer, fadeInUp } from "@/animations";
 
 const calculators = [
   { slug: "due-date-calculator", label: "Due Date Calculator", description: "Calculate your estimated due date based on your last menstrual period.", icon: Calendar },
@@ -28,33 +24,19 @@ export function LandingCalculators() {
   return (
     <section id="calculators" className="relative py-24">
       <div className="max-w-7xl mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.h2 variants={fadeInUp} className="section-title mb-4">
-            Pregnancy Tools
-          </motion.h2>
-          <motion.p variants={fadeInUp} className="text-muted-foreground max-w-2xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="section-title mb-4 animate-fade-in-up">Pregnancy Tools</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             Evidence-based calculators designed with your privacy and accuracy in mind.
             All calculations are performed locally in your browser.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {calculators.map((calc, i) => {
             const Icon = calc.icon;
             return (
-              <motion.div key={calc.slug} variants={fadeInUp}>
+              <div key={calc.slug} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
                 <Link href={`/tools/${calc.slug}`}>
                   <GlassCard className="h-full group cursor-pointer">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-peach-100 to-lavender-100 dark:from-peach-900/20 dark:to-lavender-900/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -68,10 +50,10 @@ export function LandingCalculators() {
                     </p>
                   </GlassCard>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { fadeInUp } from "@/animations";
 import { useLocale } from "@/context/locale-context";
 import Link from "next/link";
 
@@ -13,13 +11,7 @@ export function LandingCTA() {
   return (
     <section className="relative py-24">
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="glass rounded-3xl p-12 md:p-16 relative overflow-hidden"
-        >
+        <div className="glass rounded-3xl p-12 md:p-16 relative overflow-hidden animate-fade-in-up">
           <div className="absolute inset-0 bg-gradient-to-br from-peach-200/10 to-lavender-200/10 pointer-events-none" />
 
           <div className="relative z-10">
@@ -48,7 +40,7 @@ export function LandingCTA() {
                 </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

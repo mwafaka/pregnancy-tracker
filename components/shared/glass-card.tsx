@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
@@ -13,16 +10,15 @@ interface GlassCardProps {
 
 export function GlassCard({ children, className, hover = true, glow = false }: GlassCardProps) {
   return (
-    <motion.div
-      whileHover={hover ? { scale: 1.01, y: -2 } : undefined}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+    <div
       className={cn(
-        "glass rounded-3xl p-6 md:p-8 relative overflow-hidden",
+        "glass rounded-3xl p-6 md:p-8 relative overflow-hidden transition-all duration-300 ease-out",
+        hover && "hover:scale-[1.01] hover:-translate-y-0.5",
         glow && "before:absolute before:inset-0 before:bg-gradient-to-br before:from-peach-200/10 before:to-lavender-200/10 before:pointer-events-none",
         className
       )}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

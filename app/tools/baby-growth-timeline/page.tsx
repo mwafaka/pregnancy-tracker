@@ -1,7 +1,13 @@
-import { BabyGrowthTimeline } from "@/components/calculators/baby-growth-timeline";
+import dynamic from "next/dynamic";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { generateMetadata } from "@/seo/metadata";
 import { generateToolSchema, generateBreadcrumbSchema } from "@/seo/json-ld";
 import { SITE_CONFIG } from "@/constants";
+
+const BabyGrowthTimeline = dynamic(
+  () => import("@/components/calculators/baby-growth-timeline").then((m) => m.BabyGrowthTimeline),
+  { loading: () => <SkeletonLoader variant="card" /> }
+);
 
 export const metadata = generateMetadata({
   title: "Baby Growth Timeline",

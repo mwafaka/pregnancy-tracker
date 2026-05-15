@@ -76,7 +76,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
         <select
           value={localDay}
           onChange={(e) => handleChange("day", e.target.value)}
-          className={selectClass}
+          className={cn(selectClass, "flex-1 min-w-0")}
           aria-label="Day"
         >
           <option value="">Day</option>
@@ -87,7 +87,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
         <select
           value={localMonth}
           onChange={(e) => handleChange("month", e.target.value)}
-          className={selectClass}
+          className={cn(selectClass, "flex-1 min-w-0")}
           aria-label="Month"
         >
           <option value="">Month</option>
@@ -98,7 +98,7 @@ export function DateSelect({ value, onChange, label, description, error, classNa
         <select
           value={localYear}
           onChange={(e) => handleChange("year", e.target.value)}
-          className={selectClass}
+          className={cn(selectClass, "flex-1 min-w-0")}
           aria-label="Year"
         >
           <option value="">Year</option>

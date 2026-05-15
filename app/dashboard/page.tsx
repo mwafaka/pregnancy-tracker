@@ -1,20 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, CalendarDays } from "lucide-react";
 import { usePregnancy } from "@/context/pregnancy-context";
 import { useLocale } from "@/context/locale-context";
-import { PregnancyProgress } from "@/components/dashboard/pregnancy-progress";
-import { BabyGrowthCard } from "@/components/dashboard/baby-growth-card";
-import { NutritionCard } from "@/components/dashboard/nutrition-card";
-import { SymptomCheckin } from "@/components/dashboard/symptom-checkin";
-import { WeeklyInsights } from "@/components/dashboard/weekly-insights";
-import { BirthPlanCard } from "@/components/dashboard/birth-plan-card";
 import { DateSelect } from "@/components/shared/date-select";
 import { GlassCard } from "@/components/shared/glass-card";
-import { FloatingGradient } from "@/components/shared/floating-gradient";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { staggerContainer, fadeInUp } from "@/animations";
+
+const PregnancyProgress = lazy(() => import("@/components/dashboard/pregnancy-progress").then((m) => ({ default: m.PregnancyProgress })));
+const BabyGrowthCard = lazy(() => import("@/components/dashboard/baby-growth-card").then((m) => ({ default: m.BabyGrowthCard })));
+const NutritionCard = lazy(() => import("@/components/dashboard/nutrition-card").then((m) => ({ default: m.NutritionCard })));
+const SymptomCheckin = lazy(() => import("@/components/dashboard/symptom-checkin").then((m) => ({ default: m.SymptomCheckin })));
+const WeeklyInsights = lazy(() => import("@/components/dashboard/weekly-insights").then((m) => ({ default: m.WeeklyInsights })));
+const BirthPlanCard = lazy(() => import("@/components/dashboard/birth-plan-card").then((m) => ({ default: m.BirthPlanCard })));
+const FloatingGradient = lazy(() => import("@/components/shared/floating-gradient").then((m) => ({ default: m.FloatingGradient })));
 
 export default function DashboardPage() {
   const { t } = useLocale();
@@ -42,8 +44,10 @@ export default function DashboardPage() {
   if (!profile.lmp) {
     return (
       <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <FloatingGradient className="top-20 -left-48" color1="rgba(248, 176, 122, 0.2)" speed="slow" />
-        <FloatingGradient className="bottom-20 -right-48" color1="rgba(167, 122, 238, 0.15)" speed="slow" />
+        <Suspense fallback={null}>
+          <FloatingGradient className="top-20 -left-48" color1="rgba(248, 176, 122, 0.2)" speed="slow" />
+          <FloatingGradient className="bottom-20 -right-48" color1="rgba(167, 122, 238, 0.15)" speed="slow" />
+        </Suspense>
         <div className="max-w-lg w-full mx-auto px-4 relative z-10">
           <motion.div variants={staggerContainer} initial="hidden" animate="visible">
             <GlassCard>
@@ -79,8 +83,10 @@ export default function DashboardPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden pb-24">
-      <FloatingGradient className="top-40 -left-48" color1="rgba(248, 176, 122, 0.15)" speed="slow" />
-      <FloatingGradient className="top-96 -right-48" color1="rgba(167, 122, 238, 0.12)" speed="slow" />
+      <Suspense fallback={null}>
+        <FloatingGradient className="top-40 -left-48" color1="rgba(248, 176, 122, 0.15)" speed="slow" />
+        <FloatingGradient className="top-96 -right-48" color1="rgba(167, 122, 238, 0.12)" speed="slow" />
+      </Suspense>
 
       <div className="max-w-2xl mx-auto px-4 py-8 relative z-10">
         <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-5">
@@ -94,7 +100,7 @@ export default function DashboardPage() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <PregnancyProgress
               currentWeek={currentWeek}
               currentTrimester={currentTrimester}
@@ -102,21 +108,21 @@ export default function DashboardPage() {
               daysRemaining={daysRemaining}
               weeksRemaining={weeksRemaining}
             />
-          </motion.div>
+          </Suspense>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <BabyGrowthCard currentWeek={currentWeek} />
-          </motion.div>
+          </Suspense>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <NutritionCard
               currentWeek={currentWeek}
               waterIntake={todayEntry.waterIntake}
               onAddWater={addWater}
             />
-          </motion.div>
+          </Suspense>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <SymptomCheckin
               currentWeek={currentWeek}
               todayMood={todayEntry.mood}
@@ -124,9 +130,9 @@ export default function DashboardPage() {
               onMoodChange={updateTodayMood}
               onSymptomsChange={updateTodaySymptoms}
             />
-          </motion.div>
+          </Suspense>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <BirthPlanCard
               items={birthPlan}
               progress={birthPlanProgress}
@@ -135,11 +141,11 @@ export default function DashboardPage() {
               onRemove={removeBirthPlanItem}
               onReset={resetBirthPlan}
             />
-          </motion.div>
+          </Suspense>
 
-          <motion.div variants={fadeInUp}>
+          <Suspense fallback={<SkeletonLoader variant="card" />}>
             <WeeklyInsights currentWeek={currentWeek} />
-          </motion.div>
+          </Suspense>
 
           <div className="disclaimer-banner mt-6">
             <p className="font-semibold text-xs mb-1">{t("disclaimer.title")}</p>

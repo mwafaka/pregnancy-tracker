@@ -1,7 +1,13 @@
-import { ConceptionCalculator } from "@/components/calculators/conception-calculator";
+import dynamic from "next/dynamic";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { generateMetadata } from "@/seo/metadata";
 import { generateToolSchema, generateBreadcrumbSchema } from "@/seo/json-ld";
 import { SITE_CONFIG } from "@/constants";
+
+const ConceptionCalculator = dynamic(
+  () => import("@/components/calculators/conception-calculator").then((m) => m.ConceptionCalculator),
+  { loading: () => <SkeletonLoader variant="card" /> }
+);
 
 export const metadata = generateMetadata({
   title: "Conception Date Calculator",

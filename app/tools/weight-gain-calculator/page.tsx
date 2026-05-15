@@ -1,7 +1,13 @@
-import { WeightGainCalculator } from "@/components/calculators/weight-gain-calculator";
+import dynamic from "next/dynamic";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { generateMetadata } from "@/seo/metadata";
 import { generateToolSchema, generateBreadcrumbSchema } from "@/seo/json-ld";
 import { SITE_CONFIG } from "@/constants";
+
+const WeightGainCalculator = dynamic(
+  () => import("@/components/calculators/weight-gain-calculator").then((m) => m.WeightGainCalculator),
+  { loading: () => <SkeletonLoader variant="card" /> }
+);
 
 export const metadata = generateMetadata({
   title: "Pregnancy Weight Gain Calculator",

@@ -1,7 +1,13 @@
-import { OvulationCalculator } from "@/components/calculators/ovulation-calculator";
+import dynamic from "next/dynamic";
+import { SkeletonLoader } from "@/components/shared/skeleton-loader";
 import { generateMetadata } from "@/seo/metadata";
 import { generateToolSchema, generateBreadcrumbSchema } from "@/seo/json-ld";
 import { SITE_CONFIG } from "@/constants";
+
+const OvulationCalculator = dynamic(
+  () => import("@/components/calculators/ovulation-calculator").then((m) => m.OvulationCalculator),
+  { loading: () => <SkeletonLoader variant="card" /> }
+);
 
 export const metadata = generateMetadata({
   title: "Ovulation Calculator",

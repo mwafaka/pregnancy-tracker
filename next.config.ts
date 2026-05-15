@@ -10,15 +10,15 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
+    browsersListForSwc: true,
     optimizePackageImports: [
       "lucide-react",
-      "recharts",
       "framer-motion",
       "@radix-ui/react-accordion",
       "@radix-ui/react-dialog",
       "@radix-ui/react-select",
     ],
-  },
+  } as NextConfig["experimental"] & { browsersListForSwc?: boolean },
 
   headers: async () => [
     {

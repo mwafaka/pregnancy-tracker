@@ -1,14 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { staggerContainer, fadeInUp } from "@/animations";
-import { SEOSection } from "@/components/shared/seo-section";
 import { useLocale } from "@/context/locale-context";
 
 const faqKeys = [
@@ -25,32 +22,16 @@ export function LandingFAQ() {
 
   return (
     <section className="relative py-24 gradient-bg">
-      <SEOSection faqs={faqKeys.map((f) => ({ question: t(f.qKey), answer: t(f.aKey) }))} />
       <div className="max-w-3xl mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.h2 variants={fadeInUp} className="section-title mb-4">
-            {t("faq.title")}
-          </motion.h2>
-          <motion.p variants={fadeInUp} className="text-muted-foreground">
-            {t("faq.subtitle")}
-          </motion.p>
-        </motion.div>
+        <div className="text-center mb-12">
+          <h2 className="section-title mb-4 animate-fade-in-up">{t("faq.title")}</h2>
+          <p className="text-muted-foreground animate-fade-in-up" style={{ animationDelay: "0.1s" }}>{t("faq.subtitle")}</p>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-        >
+        <div>
           <Accordion type="single" collapsible className="space-y-3">
             {faqKeys.map((faq, i) => (
-              <motion.div key={i} variants={fadeInUp}>
+              <div key={i} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.05}s` }}>
                 <AccordionItem value={`item-${i}`} className="glass rounded-2xl px-6 border-none">
                   <AccordionTrigger className="text-left font-medium text-sm py-4">
                     {t(faq.qKey)}
@@ -59,10 +40,10 @@ export function LandingFAQ() {
                     {t(faq.aKey)}
                   </AccordionContent>
                 </AccordionItem>
-              </motion.div>
+              </div>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
 
         <div className="disclaimer-banner mt-8">
           <p>{t("faq.disclaimer")}</p>
