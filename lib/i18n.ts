@@ -14,7 +14,7 @@ const messages: Record<Locale, Record<string, string>> = {
     "nav.closeMenu": "Close menu",
 
     // Header
-    "header.appName": "PregnancyTracker",
+    "header.appName": "Pregnancy-Trackers",
 
     // Footer
     "footer.calculators": "Calculators",

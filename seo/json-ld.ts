@@ -2,9 +2,9 @@ import type { SEOMetadata, FAQItem } from "@/types";
 
 export function generateSiteMetadata(overrides: Partial<SEOMetadata>): SEOMetadata {
   const base = {
-    title: "PregnancyTracker",
+    title: "Pregnancy-Trackers",
     description: "Track your pregnancy week by week with evidence-based tools and resources.",
-    canonical: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pregnancytracker.com",
+    canonical: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pregnancy-trackers.com",
   };
   return { ...base, ...overrides };
 }
@@ -85,5 +85,5 @@ export function generateToolSchema({ name, description }: { name: string; descri
 export const defaultOpenGraph = {
   type: "website",
   locale: "en_US",
-  siteName: "PregnancyTracker",
+  siteName: "Pregnancy-Trackers",
 };

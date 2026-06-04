@@ -37,7 +37,7 @@ export function PregnancyWeekCalculator() {
 
   const handleShare = useCallback(async () => {
     if (!result) return;
-    const text = `I'm in week ${result.week} of pregnancy (Trimester ${result.trimester}). Track your pregnancy at PregnancyTracker!`;
+    const text = `I'm in week ${result.week} of pregnancy (Trimester ${result.trimester}). Track your pregnancy at Pregnancy-Trackers!`;
     try { await navigator.share({ title: "My Pregnancy Week", text }); }
     catch { await navigator.clipboard.writeText(text); }
   }, [result]);

@@ -1,13 +1,13 @@
 export const SITE_CONFIG = {
-  name: "PregnancyTracker",
-  title: "PregnancyTracker — Your Complete Pregnancy Companion",
+  name: "Pregnancy-Trackers",
+  title: "Pregnancy-Trackers — Your Complete Pregnancy Companion",
   description:
     "Track your pregnancy week by week, calculate due dates, ovulation, and more. Evidence-based tools and resources for every stage of your journey.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pregnancytracker.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pregnancy-trackers.com",
   locale: "en_US",
   localeAr: "ar_SA",
   type: "MedicalWebPage" as const,
-  author: "PregnancyTracker Medical Team",
+  author: "Pregnancy-Trackers Medical Team",
   reviewer: "Dr. Sarah Mitchell, OB-GYN",
   disclaimer:
     "This website provides general information and is not a substitute for professional medical advice. Always consult your healthcare provider for medical decisions.",
@@ -17,9 +17,9 @@ export const SITE_CONFIG = {
     consultProvider: true,
   },
   social: {
-    twitter: "@pregnancytracker",
-    facebook: "PregnancyTracker",
-    instagram: "pregnancytracker",
+    twitter: "@pregnancy-trackers",
+    facebook: "Pregnancy-Trackers",
+    instagram: "pregnancy-trackers",
   },
   version: "1.0.0",
   siteImages: {
@@ -46,12 +46,12 @@ export const SITE_CONFIG = {
     "morning sickness relief",
   ],
   authorInfo: {
-    name: "PregnancyTracker Medical Team",
-    url: "https://pregnancytracker.com/about",
+    name: "Pregnancy-Trackers Medical Team",
+    url: "https://pregnancy-trackers.com/about",
   },
   reviewerInfo: {
     name: "Dr. Sarah Mitchell, OB-GYN",
-    url: "https://pregnancytracker.com/about#medical-review",
+    url: "https://pregnancy-trackers.com/about#medical-review",
   },
 } as const;
 
