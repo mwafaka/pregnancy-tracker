@@ -33,6 +33,18 @@ export default function ConceptionCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([toolSchema, breadcrumbSchema]) }}
       />
+      <section className="mb-8 space-y-4">
+        <h1 className="text-3xl font-display font-bold gradient-text">Conception Date Calculator</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          Our conception date calculator estimates when conception likely occurred by working backward from your due date. Conception typically happens around ovulation — about 14 days after the first day of your last menstrual period for a standard 28-day cycle.
+        </p>
+        <p className="text-muted-foreground leading-relaxed">
+          The calculator also estimates your fertile window, approximate implantation date (6-12 days after ovulation), and when you can expect a positive pregnancy test. This reverse calculation is useful for dating a pregnancy when the exact LMP is unknown.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          All calculations are performed locally in your browser. No data is stored or transmitted.
+        </p>
+      </section>
       <ConceptionCalculator />
     </div>
   );

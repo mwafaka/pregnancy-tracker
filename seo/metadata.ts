@@ -38,10 +38,6 @@ export function generateMetadata({
     metadataBase: new URL(SITE_CONFIG.url),
     alternates: {
       canonical: url,
-      languages: {
-        en: SITE_CONFIG.url,
-        ar: `${SITE_CONFIG.url}/ar`,
-      },
     },
     openGraph: {
       title: title ?? siteTitle,

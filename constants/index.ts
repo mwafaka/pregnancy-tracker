@@ -5,7 +5,7 @@ export const SITE_CONFIG = {
     "Track your pregnancy week by week, calculate due dates, ovulation, and more. Evidence-based tools and resources for every stage of your journey.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.pregnancy-trackers.com",
   locale: "en_US",
-  localeAr: "ar_SA",
+  localeDe: "de_DE",
   type: "MedicalWebPage" as const,
   author: "Pregnancy-Trackers Medical Team",
   reviewer: "Dr. Sarah Mitchell, OB-GYN",

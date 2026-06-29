@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
-    browsersListForSwc: true,
     optimizePackageImports: [
       "lucide-react",
       "framer-motion",
@@ -18,7 +17,7 @@ const nextConfig: NextConfig = {
       "@radix-ui/react-dialog",
       "@radix-ui/react-select",
     ],
-  } as NextConfig["experimental"] & { browsersListForSwc?: boolean },
+  },
 
   headers: async () => [
     {

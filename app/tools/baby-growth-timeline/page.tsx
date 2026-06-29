@@ -33,6 +33,18 @@ export default function BabyGrowthTimelinePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([toolSchema, breadcrumbSchema]) }}
       />
+      <section className="mb-8 space-y-4">
+        <h1 className="text-3xl font-display font-bold gradient-text">Baby Growth Timeline</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          Our baby growth timeline shows you how your baby develops week by week throughout pregnancy. From a tiny poppy seed at 4 weeks to a full-term watermelon at 40 weeks, see size comparisons, length, weight, and key developmental milestones for each stage.
+        </p>
+        <p className="text-muted-foreground leading-relaxed">
+          Each week brings remarkable changes: the heart begins beating around week 6, all major organs form by week 12, the baby can hear your voice by week 20, and lungs mature in the final weeks. Scroll through the timeline to discover what is happening at every stage of your pregnancy.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          All calculations are performed locally in your browser. No data is stored or transmitted.
+        </p>
+      </section>
       <BabyGrowthTimeline />
     </div>
   );

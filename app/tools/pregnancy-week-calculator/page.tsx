@@ -33,6 +33,18 @@ export default function PregnancyWeekPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([toolSchema, breadcrumbSchema]) }}
       />
+      <section className="mb-8 space-y-4">
+        <h1 className="text-3xl font-display font-bold gradient-text">Pregnancy Week Calculator</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          Our pregnancy week calculator tells you exactly how far along you are in your pregnancy. Based on the first day of your last menstrual period (LMP), it calculates your current pregnancy week and trimester.
+        </p>
+        <p className="text-muted-foreground leading-relaxed">
+          Pregnancy is counted from the first day of your last period, which means you are considered about 2 weeks pregnant at the time of conception. The calculator uses standard 40-week pregnancy dating to determine your current stage and trimester.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          All calculations are performed locally in your browser. No data is stored or transmitted.
+        </p>
+      </section>
       <PregnancyWeekCalculator />
     </div>
   );

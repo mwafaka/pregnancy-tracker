@@ -33,6 +33,18 @@ export default function IVFDueDateCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([toolSchema, breadcrumbSchema]) }}
       />
+      <section className="mb-8 space-y-4">
+        <h1 className="text-3xl font-display font-bold gradient-text">IVF Due Date Calculator</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          Our IVF due date calculator calculates key dates for your IVF pregnancy based on your embryo transfer date and embryo age. Whether you had a day-3 (cleavage stage) or day-5 (blastocyst) transfer, the calculator determines your egg retrieval date, implantation date, pregnancy test date, and estimated due date.
+        </p>
+        <p className="text-muted-foreground leading-relaxed">
+          IVF pregnancies are dated from the embryo transfer rather than LMP. For a day-5 blastocyst transfer, the due date is approximately 261 days after transfer. For a day-3 transfer, add 263 days. This calculator follows standard ART (Assisted Reproductive Technology) dating guidelines.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          All calculations are performed locally in your browser. No data is stored or transmitted.
+        </p>
+      </section>
       <IVFDueDateCalculator />
     </div>
   );

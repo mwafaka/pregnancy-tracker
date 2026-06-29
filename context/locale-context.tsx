@@ -19,10 +19,10 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
     document.documentElement.lang = newLocale;
-    document.documentElement.dir = newLocale === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = "ltr";
   }, []);
 
-  const dir: "ltr" | "rtl" = locale === "ar" ? "rtl" : "ltr";
+  const dir: "ltr" | "rtl" = "ltr";
 
   const value = {
     locale,

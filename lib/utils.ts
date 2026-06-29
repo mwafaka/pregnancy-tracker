@@ -6,9 +6,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+const localeMap: Record<string, string> = {
+  en: "en-US",
+  de: "de-DE",
+};
+
+function getLocaleLang(locale: string): string {
+  return localeMap[locale] ?? "en-US";
+}
+
 export function formatDate(date: Date, locale: string = "en"): string {
-  const lang = locale === "ar" ? "ar-SA" : "en-US";
-  return new Intl.DateTimeFormat(lang, {
+  return new Intl.DateTimeFormat(getLocaleLang(locale), {
     month: "long",
     day: "numeric",
     year: "numeric",
@@ -16,8 +24,7 @@ export function formatDate(date: Date, locale: string = "en"): string {
 }
 
 export function formatDateShort(date: Date, locale: string = "en"): string {
-  const lang = locale === "ar" ? "ar-SA" : "en-US";
-  return new Intl.DateTimeFormat(lang, {
+  return new Intl.DateTimeFormat(getLocaleLang(locale), {
     month: "short",
     day: "numeric",
   }).format(date);
